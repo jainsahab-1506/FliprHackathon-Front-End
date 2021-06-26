@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+
+import Container from './Container';
+import EmailGroupForm from './CreateEmailComps/EmailGroupForm.jsx';
 
 export default function CreateEmail() {
-    return (
-        <div>
-            
-        </div>
-    )
+	return (
+		<div>
+			<Container children={<EmailGroupForm />} />
+		</div>
+	);
 }
