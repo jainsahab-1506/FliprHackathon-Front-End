@@ -1,9 +1,9 @@
 import React from 'react'
+import Container from './Container'
+import ChainForm from './ChainComps/ChainForm'
 
 export default function CreateChain() {
     return (
-        <div>
-            
-        </div>
+        <Container children={<ChainForm/>}></Container>
     )
 }

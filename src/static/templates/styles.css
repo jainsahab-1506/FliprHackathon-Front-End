@@ -447,3 +447,17 @@ footer {
 		width: calc(100vw - 32px);
 	}
 }
+
+.login-container{
+    background-image: url("../images/comrawpixel591606.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.green{
+    background-color: #008000;
+}
+
+.red{
+    background-color: maroon;
+}
