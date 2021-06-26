@@ -1,0 +1,287 @@
+body{
+    font-family:poppins;
+    font-size: 1rem;
+    width:100%;
+    margin:0;
+}
+
+.d-flex{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.left{
+    float:left;
+    width:50%;
+}
+
+.right{
+    float:right;
+    width:50%;
+}
+
+.center{
+    margin:auto;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.container{
+    margin:auto;
+    width:100%;
+    height: auto;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    /* padding-bottom: 10vh; */
+}
+
+.inner{
+    margin-left:5%;
+}
+
+.content{
+    width:100%;
+    margin-bottom: 0;
+}
+
+.w-50{
+    width:50%;
+}
+
+.h-100vh{
+    height: 100vh;
+}
+
+.h-80vh{
+    height: 80vh;
+}
+
+.bg-1{
+    background-color: #FFFFFF;
+    color:#191919;
+}
+.bg-2{
+    background-color: #C4B0C7;
+    color: white;
+}
+
+h1{
+    font-size: 2.5rem;
+}
+
+.sub-heading{
+    font-size: 2em;
+}
+
+.sub-content-box{
+    margin-top: 5vh;
+    /* margin-bottom: 5vh; */
+    padding:10vh;
+}
+
+.sub-text{
+    font-size: 1.5rem;
+    padding-bottom: 3vh;
+}
+
+.sub-head-text{
+    font-size: 1.25rem;
+}
+
+.team-item{
+    width: 10vw;
+    height: 10vw;
+    border-radius: 50%;
+    margin: auto;
+    background-color:#e6e8e6;
+}
+
+footer{
+    width:100%;
+    height: 15vh;
+    background-color: #191919;
+    margin-top:0;
+}
+
+.dash-btn{
+    text-decoration: none;
+}
+
+.dash-btn-container{
+    margin-top: 30px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: transform 450ms;
+    width: fit-content;
+    margin: auto;
+    cursor: pointer;
+}
+
+.dash-btn-container:hover{
+    transform: scale(1.08);
+}
+
+.cards-container{
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-evenly; */
+    flex: 33% 33% 33%;
+}
+
+.card{
+    padding: 2%;
+    width: 25%;
+    background-color: beige;
+    border-radius: 10px;
+    margin: 2vh;
+}
+
+.card-top{
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-footer{
+    display: flex;
+    /* width: 100%; */
+    justify-items: end;
+    justify-content: flex-end;
+}
+
+.chain-icon{
+    font-size:1.25rem;
+    margin-right: 5px;
+    text-decoration: none;
+    color: black;
+}
+
+.status-icon{
+    background-color: #008000;
+    height: 26px;
+    width: 26px;
+    border-radius: 50%;
+}
+
+.add-icon-card{
+    background: transparent;
+    display: grid;
+    place-items: center;
+}
+
+.add-icon{
+    margin: auto;
+    width: fit-content;
+    transition: transform 450ms;
+    cursor: pointer;
+}
+
+.add-icon:hover{
+    transform: scale(1.05);
+}
+
+.add-icon i{
+    font-size: 4rem;
+}
+
+.form-group{
+    display: flex;
+    justify-content: flex-start;
+    padding: 12px;
+}
+
+.form-group label{
+    width: 20vw;
+    /* margin-right: 20vw; */
+}
+
+.text-input{
+    width: 40vw;
+    border-width: 0 0 2px;
+    border-color: black;
+    font-size: 1.1rem;
+}
+
+.text-input:focus{
+    outline:none;
+    border-color: blue;
+}
+
+.drop-downs{
+    display: flex;
+    gap: 5vw;
+}
+
+.freq-drop{
+    width: 10vw;
+    border-width: 0 0 2px;
+    border-color: black;
+    font-size: 1.1rem;
+}
+
+.email-group-drop{
+    width: 40vw;
+}
+
+.textarea-cont{
+    position: relative;
+}
+
+.attach-pin{
+    position: absolute;
+    bottom: 15px;
+    right: 5px;
+}
+
+.textarea-input{
+    border-width: 2px;
+    border-color: black;
+    background: #F6F1F1;
+    font-size: 1.1rem;
+    padding: 10px 10px 45px;
+}
+
+.submit-sec{
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+    gap: 5vw;
+}
+
+.submit-cont{
+    width: fit-content;
+    padding: 5px 15px 5px;
+    background: #5FAF5F;
+    border-radius: 5px;
+}
+.submit-run-cont{
+    width: fit-content;
+    padding: 5px 15px 5px;
+    background: #89608E;
+    border-radius: 5px;
+}
+
+.save-btn{
+    text-decoration: none;
+    color: white;
+}
+
+.attachments{
+    display: flex;
+    position: absolute;
+    bottom: 15px;
+    left: 10px;
+}
+
+.attach-file{
+    background: #C4C4C4;
+    border-radius: 5px;
+    width: fit-content;
+    padding: 2px 5px 2px;
+    line-height: 1.6;
+}
+
+.remove-file{
+    text-decoration: none;
+    color: black;
+}
