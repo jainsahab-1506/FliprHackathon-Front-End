@@ -48,11 +48,11 @@
     ]
   },
   "react-dotenv": {
-      "whitelist": [
-        "REACT_APP_SERVER_URL",
-        "REACT_APP_SITE_URL"
-      ]
-    },
+    "whitelist": [
+      "REACT_APP_SERVER_URL",
+      "REACT_APP_SITE_URL"
+    ]
+  },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "devDependencies": {},

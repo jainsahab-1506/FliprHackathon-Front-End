@@ -3,7 +3,7 @@ import Session from "../../../service/session";
 
 export const signInSuccess = (data) => (dispatch) => {
   Session.set("token", data.token);
-  Session.setObject("user", data.userid);
+  Session.setObject("userinfo", data.userinfo);
 
   dispatch(
     {
@@ -18,7 +18,7 @@ export const signInSuccess = (data) => (dispatch) => {
 
 export const logOutSuccess = () => (dispatch) => {
   Session.remove("token");
-  Session.remove("user");
+  Session.remove("userinfo");
   dispatch({
     type: LOG_OUT_SUCCESS,
   });

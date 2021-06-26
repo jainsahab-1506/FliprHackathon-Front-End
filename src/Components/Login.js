@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "./utils/axios.js";
+import { requests } from "./utils/requests";
+import { useDispatch } from "react-redux";
+import { signInSuccess } from "../store/modules/auth/auth.action";
+
 export default function Login(props) {
+  const dispatch = useDispatch();
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   function handleChange(e) {
@@ -13,10 +19,27 @@ export default function Login(props) {
       setpassword(value);
     }
   }
-  function handleSubmit(e) {
+  function HandleSubmit(e) {
+    const data = {
+      username: email,
+      password: password,
+    };
     e.preventDefault();
-    console.log(email);
-    console.log(password);
+    async function doLogin() {
+      const request = await axios.post(requests["doLogin"], data);
+      return request;
+    }
+    doLogin()
+      .then((res) => {
+        const data = res.data;
+        const { token: token, profile: userinfo } = res.data;
+
+        dispatch(signInSuccess({ token, userinfo }));
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
   return (
     <div>
@@ -46,7 +69,7 @@ export default function Login(props) {
             </div>
             <div className="submit-sec">
               <div className="submit-cont">
-                <a onClick={handleSubmit} href className="save-btn">
+                <a onClick={HandleSubmit} href className="save-btn">
                   Login
                 </a>
               </div>

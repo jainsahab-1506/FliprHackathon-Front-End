@@ -3,7 +3,7 @@ import Session from "../../../service/session";
 
 const initialState = {
   token: Session.get("token") || undefined,
-  userid: Session.get("user") || undefined,
+  userinfo: Session.getObject("userinfo") || undefined,
 };
 
 const authReducer = (state = initialState, payload) => {
@@ -12,7 +12,7 @@ const authReducer = (state = initialState, payload) => {
     case SIGN_IN_SUCCESS:
       return { ...state, ...data };
     case LOG_OUT_SUCCESS:
-      return { ...state, token: "", userid: null };
+      return { ...state, token: "", userinfo: null };
 
     default:
       return state;
