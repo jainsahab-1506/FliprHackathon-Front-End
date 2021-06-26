@@ -274,6 +274,7 @@ footer{
 }
 
 .attach-file{
+    display: flex;
     background: #C4C4C4;
     border-radius: 5px;
     width: fit-content;
@@ -281,7 +282,83 @@ footer{
     line-height: 1.6;
 }
 
+.attach-file h5{
+    margin: 2.5px 5px 0 0;
+}
+
 .remove-file{
     text-decoration: none;
     color: black;
+    font-size: 0.8rem;
+}
+
+.upload-sec{
+    display: flex;
+    gap: 10px;
+}
+
+.upload-sec h5{
+    margin: 5px 0 0 0;
+}
+
+.upload-btn{
+    text-decoration: none;
+    color: black;
+}
+
+.material-icons{
+    vertical-align: middle;
+}
+
+.login-card{
+    width:40%;
+    padding: 20px;
+    box-shadow: 0 5px 8px 0 rgb(0 0 0 / 20%), 0 9px 26px 0 rgb(0 0 0 / 19%);
+    min-height: 75vh;
+    background-color: white;
+}
+
+.signup-card{
+    float:right;
+    width:40%;
+    padding: 20px;
+    box-shadow: 0 5px 8px 0 rgb(0 0 0 / 20%), 0 9px 26px 0 rgb(0 0 0 / 19%);
+    min-height: 75vh;
+    background-color: white;
+}
+
+.signup-card h1{
+    margin: auto;
+    width: fit-content;
+    
+}
+
+.login-card h1{
+    margin: auto;
+    width: fit-content;
+}
+
+.form-container{
+    margin-top: 5vh;
+}
+
+#login-form .form-group{
+    padding: 30px;
+}
+
+.sign-up-link{
+    text-align: center;
+    text-decoration: none;
+    color: blue;
+}
+
+.region{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.login-container{
+    background-image: url("../images/comrawpixel591606.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
