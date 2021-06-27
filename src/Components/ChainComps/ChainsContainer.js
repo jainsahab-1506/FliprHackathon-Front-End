@@ -2,7 +2,7 @@ import {React, useState, useEffect} from 'react'
 import axios from '../utils/axios';
 import {requests} from '../utils/requests';
 import Chain from './Chain';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 export default function ChainsContainer() {
     
@@ -30,10 +30,9 @@ export default function ChainsContainer() {
                 {chains && chains.map((chain, index) => <Chain chain={chain}/>)}
                 <div className="card add-icon-card">
                     <div className="add-icon">
-                        <Link to="/chains/add">
-                            <i className="material-icons">
-                                add_circle
-                            </i>
+                        <Link to="/chains/add"><i className="material-icons">
+                            add_circle
+                        </i>
                         </Link>
                     </div>
                 </div>

@@ -33,6 +33,7 @@ body {
 	height: auto;
 	padding-top: 10vh;
 	padding-bottom: 10vh;
+	min-height: 80vh;
 	/* padding-bottom: 10vh; */
 }
 
@@ -210,6 +211,7 @@ footer {
 .drop-downs {
 	display: flex;
 	gap: 5vw;
+	min-height: 50px;
 }
 
 .freq-drop {
@@ -231,6 +233,8 @@ footer {
 	position: absolute;
 	bottom: 15px;
 	right: 5px;
+	cursor: pointer;
+	width: fit-content;
 }
 
 .textarea-input {
@@ -280,6 +284,7 @@ footer {
 	width: fit-content;
 	padding: 2px 5px 2px;
 	line-height: 1.6;
+	margin-right: 10px;
 }
 
 .attach-file h5 {
@@ -492,4 +497,10 @@ footer {
 	/* border: 2px solid red; */
 	font-weight: bold;
 	font-size: 1.1rem;
+}
+
+#attachment{
+	opacity: 0;
+	width: 0;
+	position: absolute;
 }

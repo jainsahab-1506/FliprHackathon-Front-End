@@ -1,5 +1,6 @@
 import React from 'react'
 import SubContentBox from './SubContentBox'
+import {Link} from 'react-router-dom';
 
 export default function SendBusinessMail() {
     
@@ -11,7 +12,7 @@ export default function SendBusinessMail() {
         <div class="right">
             <h1 class="sub-heading">Set Up your business mails quickly</h1>
             <p class="center sub-text">Get your business up and running by sending out newsletters, updates to your suscribers</p>
-            <div class="dash-btn-container bg-1"><a class="dash-btn">Manage chains</a></div>
+            <div class="dash-btn-container bg-1"><Link to="/chains/manage" class="dash-btn">Manage chains</Link></div>
         </div></>)
     }
 

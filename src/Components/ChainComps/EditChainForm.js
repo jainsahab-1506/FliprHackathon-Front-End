@@ -13,7 +13,7 @@ import {
 } from '@material-ui/pickers';
 import { isThisSecond } from 'date-fns';
 
-export default class ChainForm extends React.Component{
+export default class EditChainForm extends React.Component{
     
     constructor(props){
         super(props);
@@ -25,7 +25,7 @@ export default class ChainForm extends React.Component{
                 groupName : ""
             },
             frequency : {
-                period: "Weekly",
+                period: "",
                 date: "01/01",
                 day: "Monday",
                 dateOfMonth: 1,
@@ -61,7 +61,7 @@ export default class ChainForm extends React.Component{
             const request = await axios.get(requests['fetchEmailGroups']);
             return request;
         }
-        console.log(this.props.chainId);
+
         if(this.props.chainId){
             fetchChainData(this.props.chainId).then((res) => {
                 const data = res.data.chaindata;
@@ -90,34 +90,35 @@ export default class ChainForm extends React.Component{
         const chainData = this.state;
         fd.append("files", chainData.attachedNewFiles);
         var payload = {
-            _id: chainData._id,
-            chainname : chainData.chainname,
-            userid : chainData.userid,
-            emailgroupid : chainData.emailgroupid._id,
-            messageid : {
-                _id : chainData.messageid._id,
-                text : chainData.messageid.text
+            "_id": chainData._id,
+            "chainname" : chainData.chainname,
+            "userid" : chainData.userid,
+            "emailgroupid" : {
+                "_id" : chainData.emailgroupid,
             },
-            frequency: chainData.frequency,
-            status: false
+            "messageid" : {
+                "_id" : chainData.messageid._id,
+                "text" : chainData.messageid.text
+            },
+            "frequency": chainData.frequency,
+            "status": false
         }
         
-        console.log(JSON.stringify(payload));
         if(futureStatus) payload["status"] = true;
         fd.append("body", JSON.stringify(payload));
 
-        // console.log(payload, fd);
+        console.log(payload, fd);
 
         var requrl;
         var reqmethod
         // CALL PUT REQUEST IS ID EXISTS
         if(chainData._id){
             requrl = requests["updateChain"]+"/"+chainData._id;
-            reqmethod = "put";
+            reqmethod = "PUT";
         }
         else{
             requrl = requests["createNewChain"];
-            reqmethod = "post";
+            reqmethod = "POST";
         }
         console.log(requrl);
 
@@ -187,7 +188,7 @@ export default class ChainForm extends React.Component{
 
     handleGroupChange(event){
         this.setState({
-            emailgroupid : {...this.state.emailgroupid, _id: event.target.value}
+            emailgroupid : event.target.value
         }, ()=>{
             console.log(this.state);
         }); 
@@ -248,7 +249,7 @@ export default class ChainForm extends React.Component{
         }
 
         return <div className="inner">
-            <h1>Create Chain</h1>
+            <h1>Edit Chain</h1>
             <div className="form-container">
                 <form id="chain-form">
                     <div className="form-group">
@@ -356,68 +357,3 @@ export default class ChainForm extends React.Component{
         </div>
     }
 }
-
-// {
-//     "_id": "60d6f1a753c1325a2c01e523",
-//     "chainname": "Test Chain 1",
-//     "userid": "60d6c141db2fbb2c4c3e0256",
-//     "emailgroupid": {
-//         "to": [
-//             "user1@gmail,com"
-//         ],
-//         "cc": [
-//             "user3@gmail,com",
-//             "user4@gmail.com"
-//         ],
-//         "bcc": [
-//             "user5@gmail,com"
-//         ],
-//         "_id": "60d6cadfd0bbb7331fa23564",
-//         "owner": "60d6c141db2fbb2c4c3e0256",
-//         "groupName": "Test Group Beta",
-//         "__v": 0
-//     },
-//     "messageid": {
-//         "attachments": [],
-//         "_id": "60d6f1a753c1325a2c01e522",
-//         "text": "Hello",
-//         "__v": 0
-//     },
-//     "frequency": "Weekly",
-//     "status": false,
-//     "__v": 0
-// }
-
-// [
-//     {
-//       fieldname: 'files',
-//       originalname: 'Dekisugi.jpg',
-//       encoding: '7bit',
-//       mimetype: 'image/jpeg',
-//       destination: 'uploads/',
-//       filename: '4eaaa5ae4aa4f211713f34f35117630f',
-//       path: 'uploads/4eaaa5ae4aa4f211713f34f35117630f',
-//       size: 32796
-//     }
-//   ]
-
-
-    // '{
-    //     "_id": "60d6f1a753c1325a2c01e523",
-    //     "chainname": "Test Chain 1",
-    //     "userid": "60d6a55233a1d24e8c984df5",
-    //     "emailgroupid": "60d6cadfd0bbb7331fa23564",
-    //     "messageid": {
-    //         "_id":"60d6f1a753c1325a2c01e522",
-    //         "text":"Helooooooooo"
-    //     }
-    //     "frequency": {
-    //         "period": "Weekly",
-    //         "day": "Monday",
-    //         "date": "01/01",
-    //         "time": "23:59",
-    //         "dateofMonth": "1",
-    //         "repeat": ""
-    //     },
-    //     "status": false,
-    // }'

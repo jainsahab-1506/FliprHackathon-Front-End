@@ -4,6 +4,6 @@ import Container from './Container';
 
 export default function ManageChains() {
     return (
-        <Container children={<ChainsContainer/>}></Container>
+        <Container children={<ChainsContainer/>}/>
     )
 }

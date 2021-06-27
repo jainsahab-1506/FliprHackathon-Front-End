@@ -11,4 +11,9 @@ export const requests = {
 	deleteEmailGroup: '/email-group',
 	updateEmailGroup: '/email-group',
 	doLogout: '/logout',
+    fetchChainById: '/chains',
+    fetchEmailGroups: '/email-group',
+    createNewChain: '/chains',
+    updateChain: '/chains',
+	deleteChain: '/chains'
 };
