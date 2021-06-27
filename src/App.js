@@ -1,7 +1,7 @@
 import './static/templates/styles.css';
 import Dashboard from './Components/Dashboard';
 import Footer from './Components/Footer';
-import CustomNavbar from './Components/CustomNavbar';
+import CustomNavbar from './Components/NavBar/CustomNavbar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ManageChains from './Components/ManageChains';
 import ManageEmails from './Components/ManageEmails';
@@ -39,7 +39,8 @@ function App() {
 								exact
 								component={ManageEmails}></Route>
 							<Route path='/email/add' exact component={CreateEmail}></Route>
-							<Route path='/chains/add' exact component={CreateChain}></Route>
+							<Route path='/chains/add/:chainId?' exact component={CreateChain}></Route>
+              {/* <Route path='/chains/edit/:id' exact component={EditChain}></Route> */}
 						</Switch>
 						<Footer />
 					</Route>
