@@ -4,7 +4,7 @@ import Session from "../../service/session.js";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 var instance = axios.create({
-  baseURL: SERVER_URL,
+  baseURL: "https://flipr-new.herokuapp.com",
 });
 
 const authToken = Session.get("token");

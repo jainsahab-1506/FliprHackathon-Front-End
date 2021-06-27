@@ -262,7 +262,7 @@ export default class ChainForm extends React.Component{
                             {this.state.emailGroups.map((emailGroup, index)=><option key={index} value={emailGroup._id}>{emailGroup.groupName}</option>)}
                         </select>
                         <div className="add-icon">
-                            <Link to="/emails/add"><i className="material-icons">
+                            <Link to="/email/add" title="Add new email Group"><i className="material-icons" style={{fontSize:'1.5rem'}}>
                                 add_circle
                             </i>
                             </Link>
