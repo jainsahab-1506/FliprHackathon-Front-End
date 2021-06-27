@@ -52,7 +52,12 @@ export default function Signup() {
         const data = res.data;
         console.log(data);
         const { token: token, profile: userinfo } = res.data;
+        setpassword("");
+        setLastName("");
+        setFirstName("");
+        setemail("");
         window.location.href = "/";
+
         dispatch(signInSuccess({ token, userinfo }));
       })
       .catch((e) => {

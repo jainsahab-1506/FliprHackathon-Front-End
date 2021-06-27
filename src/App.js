@@ -1,7 +1,7 @@
 import "./static/templates/styles.css";
 import Dashboard from "./Components/Dashboard";
 import Footer from "./Components/Footer";
-import CustomNavbar from "./Components/CustomNavbar";
+import CustomNavbar from "./Components/NavBar/CustomNavbar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ManageChains from "./Components/ManageChains";
 import ManageEmails from "./Components/ManageEmails";
