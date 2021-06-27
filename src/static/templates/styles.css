@@ -448,16 +448,31 @@ footer {
 	}
 }
 
-.login-container{
-    background-image: url("../images/comrawpixel591606.jpeg");
-    background-size: cover;
-    background-repeat: no-repeat;
+.login-container {
+	background-image: url('../images/comrawpixel591606.jpeg');
+	background-size: cover;
+	background-repeat: no-repeat;
 }
 
-.green{
-    background-color: #008000;
+.green {
+	background-color: #008000;
 }
 
-.red{
-    background-color: maroon;
+.red {
+	background-color: maroon;
+}
+
+.upload-sec input {
+	opacity: 0;
+	width: 0.1px;
+	height: 0.1px;
+	position: absolute;
+}
+
+.upload-sec label {
+	display: flex;
+	gap: 10px;
+	min-width: 100px;
+	justify-content: space-between;
+	cursor: pointer;
 }

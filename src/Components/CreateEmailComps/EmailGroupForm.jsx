@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import ReactTagInput from '@pathofdev/react-tag-input';
+
+import axios from '../utils/axios';
+import { requests } from '../utils/requests';
 
 import '@pathofdev/react-tag-input/build/index.css';
 import TagsInput from './TagsInput';
@@ -14,6 +16,33 @@ export default function EmailGroupForm() {
 
 	const [selectedFile, setSelectedFile] = useState();
 	const [isSelected, setIsSelected] = useState(false);
+
+	const sendEmailFormData = async (event) => {
+		event.preventDefault();
+
+		try {
+			const response = await axios.post(
+				requests['createEmailGroup'],
+				emailFormData
+			);
+
+			if (response.status === 200) {
+				alert(`Email group ${emailFormData.groupName} created successfully.`);
+
+				setEmailFormData({
+					groupName: '',
+					to: [],
+					cc: [],
+					bcc: [],
+				});
+			} else {
+				alert('Something went wrong. Please try again.');
+			}
+		} catch (error) {
+			alert('Something went wrong. Please try again.');
+			console.log(error);
+		}
+	};
 
 	const changeHandler = (event) => {
 		const file = event.target.files[0];
@@ -41,8 +70,6 @@ export default function EmailGroupForm() {
 		setIsSelected(true);
 	};
 
-	const handleSubmission = () => {};
-
 	const changeGroupName = (event) => {
 		const newGroupName = event.target.value;
 		setEmailFormData((previous) => {
@@ -51,11 +78,6 @@ export default function EmailGroupForm() {
 				groupName: newGroupName,
 			};
 		});
-	};
-
-	const printFormData = (event) => {
-		event.preventDefault();
-		console.log(emailFormData);
 	};
 
 	const selectedTags = (tags, list) => {
@@ -137,18 +159,22 @@ export default function EmailGroupForm() {
 					</div>
 					<div class='submit-sec'>
 						<div class='upload-sec'>
-							<a href='' class='upload-btn'>
+							<input
+								type='file'
+								name='file'
+								id='file'
+								onChange={changeHandler}
+							/>
+							<label for='file' className='submit-cont save-btn'>
 								<span class='material-icons'>cloud_upload</span>
-							</a>
-							<h5>Upload with JSON</h5>
+								Upload with JSON
+							</label>
 						</div>
-						<div class='submit-cont' onClick={printFormData}>
+						<div class='submit-cont' onClick={sendEmailFormData}>
 							<a href='' class='save-btn'>
 								Save
 							</a>
 						</div>
-
-						<input type='file' name='file' onChange={changeHandler} />
 					</div>
 				</form>
 			</div>
