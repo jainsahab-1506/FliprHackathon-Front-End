@@ -1,8 +1,7 @@
 import React from 'react';
 
 import Container from './Container';
-import EmailGroupForm from './CreateEmailComps/EmailGroupForm.jsx';
-
+import EmailGroupForm from './EmailGroupComps/EmailGroupForm.jsx';
 
 export default function CreateEmail() {
 	return (

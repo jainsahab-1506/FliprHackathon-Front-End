@@ -476,3 +476,20 @@ footer {
 	justify-content: space-between;
 	cursor: pointer;
 }
+
+/* Email Group Table */
+.rdt_Table {
+	border: 2px solid black;
+	width: 85vw !important;
+	/* margin: 0 auto; */
+}
+
+.rdt_TableBody {
+	border-top: 2px solid black;
+}
+
+.rdt_TableHeadRow * * * {
+	/* border: 2px solid red; */
+	font-weight: bold;
+	font-size: 1.1rem;
+}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import axios from '../utils/axios';
 import { requests } from '../utils/requests';
@@ -7,6 +8,8 @@ import '@pathofdev/react-tag-input/build/index.css';
 import TagsInput from './TagsInput';
 
 export default function EmailGroupForm() {
+	const history = useHistory();
+
 	const [emailFormData, setEmailFormData] = useState({
 		groupName: '',
 		to: [],
@@ -35,6 +38,8 @@ export default function EmailGroupForm() {
 					cc: [],
 					bcc: [],
 				});
+
+				history.push(`/email/manage`);
 			} else {
 				alert('Something went wrong. Please try again.');
 			}
