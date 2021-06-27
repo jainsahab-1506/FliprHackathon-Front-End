@@ -12,6 +12,7 @@ import {
   DatePicker
 } from '@material-ui/pickers';
 import { isThisSecond } from 'date-fns';
+import { Link } from 'react-router-dom';
 
 export default class ChainForm extends React.Component{
     
@@ -260,6 +261,12 @@ export default class ChainForm extends React.Component{
                         <select className="freq-drop email-group-drop" value={this.state.emailgroupid._id} onChange={this.handleGroupChange.bind(this)}>
                             {this.state.emailGroups.map((emailGroup, index)=><option key={index} value={emailGroup._id}>{emailGroup.groupName}</option>)}
                         </select>
+                        <div className="add-icon">
+                            <Link to="/emails/add"><i className="material-icons">
+                                add_circle
+                            </i>
+                            </Link>
+                        </div>
                     </div>
                     <div className="form-group">
                         <label>Frequency</label>
