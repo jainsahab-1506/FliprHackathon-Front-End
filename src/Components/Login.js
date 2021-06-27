@@ -1,11 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "./utils/axios.js";
 import { requests } from "./utils/requests";
 import { useDispatch } from "react-redux";
-import { signInSuccess } from "../store/modules/auth/auth.action";
+import {
+  logOutSuccess,
+  signInSuccess,
+} from "../store/modules/auth/auth.action";
+import { useSelector } from "react-redux";
+import { GoogleLogin } from "react-google-login";
 
 export default function Login(props) {
+  const authToken = useSelector((state) => state.auth.token);
+  useEffect(() => {
+    if (authToken) {
+      // dispatch(logOutSuccess({}));
+      window.location.href = "/";
+    }
+  }, []);
   const dispatch = useDispatch();
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
@@ -19,26 +31,47 @@ export default function Login(props) {
       setpassword(value);
     }
   }
+  function responseGoogleSuccess(resp) {
+    console.log(resp);
+    async function doOAuthLogin() {
+      const request = await axios.post(requests["doOAuthLogin"], resp);
+      return request;
+    }
+    doOAuthLogin()
+      .then((res) => {
+        const data = res.data;
+        const { token: token, profile: userinfo } = res.data;
+
+        window.location.href = "/";
+        dispatch(signInSuccess({ token, userinfo }));
+      })
+      .catch((e) => {
+        alert("Something Went Wrong");
+        window.location.href = "/login";
+      });
+  }
   function HandleSubmit(e) {
-    const data = {
+    const senddata = {
       username: email,
       password: password,
     };
     e.preventDefault();
     async function doLogin() {
-      const request = await axios.post(requests["doLogin"], data);
+      const request = await axios.post(requests["doLogin"], senddata);
       return request;
     }
     doLogin()
       .then((res) => {
         const data = res.data;
         const { token: token, profile: userinfo } = res.data;
-
+        setemail("");
+        setpassword("");
+        window.location.href = "/";
         dispatch(signInSuccess({ token, userinfo }));
-        console.log(data);
       })
       .catch((e) => {
-        console.log(e);
+        alert("Something Went Wrong");
+        window.location.href = "/login";
       });
   }
   return (
@@ -73,8 +106,17 @@ export default function Login(props) {
                   Login
                 </a>
               </div>
+
               <div className="submit-google-cont">
-                <div className="g-signin2" data-onsuccess="onSignIn" />
+                <GoogleLogin
+                  clientId="97781066717-peq315812iffrl0jc4q2jdsbn1hjlrn8.apps.googleusercontent.com"
+                  buttonText="Sign in with Google"
+                  onSuccess={responseGoogleSuccess}
+                  // onFailure={responseGoogle}
+                  // cookiePolicy={"single_host_origin"}
+                  // cross-origin-opener-policy={"same-origin-allow-popups"}
+                />
+                {/* <div className="g-signin2" data-onsuccess="onSignIn" /> */}
               </div>
             </div>
             <div className="form-group">

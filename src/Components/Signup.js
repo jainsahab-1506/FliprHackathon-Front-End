@@ -1,6 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
+import axios from "./utils/axios.js";
+import { requests } from "./utils/requests";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  logOutSuccess,
+  signInSuccess,
+} from "../store/modules/auth/auth.action";
 export default function Signup() {
+  const authToken = useSelector((state) => state.auth.token);
+  useEffect(() => {
+    if (authToken) {
+      // dispatch(logOutSuccess({}));
+      window.location.href = "/";
+    }
+  }, []);
+  const dispatch = useDispatch();
   const [email, setemail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -19,10 +35,32 @@ export default function Signup() {
       setpassword(value);
     }
   }
-  function handleSubmit(e) {
+  function HandleSubmit(e) {
+    const senddata = {
+      username: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+    };
     e.preventDefault();
-    console.log(email);
-    console.log(password);
+    async function doRegister() {
+      const request = await axios.post(requests["doRegister"], senddata);
+      return request;
+    }
+    doRegister()
+      .then((res) => {
+        const data = res.data;
+        console.log(data);
+        const { token: token, profile: userinfo } = res.data;
+        window.location.href = "/";
+        dispatch(signInSuccess({ token, userinfo }));
+      })
+      .catch((e) => {
+        console.log(e.data);
+      });
+  }
+  function responseGoogle(resp) {
+    console.log(resp);
   }
   return (
     <div>
@@ -72,7 +110,7 @@ export default function Signup() {
             </div>
             <div className="submit-sec">
               <div className="submit-cont">
-                <a onClick={handleSubmit} className="save-btn">
+                <a onClick={HandleSubmit} className="save-btn">
                   SignUp
                 </a>
               </div>
