@@ -32,7 +32,7 @@ export default function Login(props) {
     }
   }
   function responseGoogleSuccess(resp) {
-    console.log(resp);
+    console.log(resp.mc.access_token);
     async function doOAuthLogin() {
       const request = await axios.post(requests["doOAuthLogin"], resp);
       return request;
@@ -42,12 +42,12 @@ export default function Login(props) {
         const data = res.data;
         const { token: token, profile: userinfo } = res.data;
 
-        window.location.href = "/";
+        // window.location.href = "/";
         dispatch(signInSuccess({ token, userinfo }));
       })
       .catch((e) => {
         alert("Something Went Wrong");
-        window.location.href = "/login";
+        // window.location.href = "/login";
       });
   }
   function HandleSubmit(e) {
@@ -109,10 +109,13 @@ export default function Login(props) {
 
               <div className="submit-google-cont">
                 <GoogleLogin
-                  clientId="97781066717-peq315812iffrl0jc4q2jdsbn1hjlrn8.apps.googleusercontent.com"
+                  clientId="880095652773-fa64olbb7s5u063d05cdva3pl88mrbm2.apps.googleusercontent.com"
                   buttonText="Sign in with Google"
                   onSuccess={responseGoogleSuccess}
-                  // onFailure={responseGoogle}
+                  scope="email profile https://www.googleapis.com/auth/gmail.send"
+                  onFailure={(e) => {
+                    console.log(e);
+                  }}
                   // cookiePolicy={"single_host_origin"}
                   // cross-origin-opener-policy={"same-origin-allow-popups"}
                 />
