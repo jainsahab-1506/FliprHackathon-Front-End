@@ -60,7 +60,8 @@
   "react-dotenv": {
     "whitelist": [
       "REACT_APP_SERVER_URL",
-      "REACT_APP_SITE_URL"
+      "REACT_APP_SITE_URL",
+      "REACT_APP_SERVER_URL2"
     ]
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",

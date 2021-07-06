@@ -2,17 +2,9 @@ import React from 'react'
 import axios from '../utils/axios';
 import {requests} from '../utils/requests';
 import 'date-fns';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-  TimePicker,
-  DatePicker
-} from '@material-ui/pickers';
-import { isThisSecond } from 'date-fns';
 import { Link } from 'react-router-dom';
+import Session from '../../service/session';
+import FrequencySelector from './FrequencySelector';
 
 export default class ChainForm extends React.Component{
     
@@ -27,11 +19,12 @@ export default class ChainForm extends React.Component{
             },
             frequency : {
                 period: "Weekly",
-                date: "01/01",
-                day: "Monday",
-                dateOfMonth: 1,
-                time: "",
-                repeat: "",
+                month: 0,
+                day: 0,
+                dayOfMonth: 1,
+                hours: 0,
+                minutes: 0,
+                seconds: 0,
             },
             messageid : {
                 _id : "",
@@ -44,10 +37,6 @@ export default class ChainForm extends React.Component{
             attachedNewFiles : []
         }
 
-        this.handleDateChange = this.handleDateChange.bind(this);
-        this.handleTimeChange = this.handleTimeChange.bind(this);
-        this.handleOptionChange = this.handleOptionChange.bind(this);
-        this.getDateTime = this.getDateTime.bind(this);
         this.handleFileChange = this.handleFileChange.bind(this);
         this.submitChainData = this.submitChainData.bind(this);
     }
@@ -62,49 +51,69 @@ export default class ChainForm extends React.Component{
             const request = await axios.get(requests['fetchEmailGroups']);
             return request;
         }
+
+        fetchEmailGroups().then((res)=>{
+            const data = res.data;
+                this.setState({emailGroups:data}
+                , ()=>{
+                    console.log(this.state.emailGroups);
+                    if(!(this.state.emailgroupid) || (!this.state.emailgroupid._id && this.state.emailGroups)){
+                        this.setState({
+                            emailgroupid : this.state.emailGroups[0]
+                        })
+                    }
+                })
+            }).catch((e)=>{
+                console.log(e);
+                this.setState({emailGroups:[]
+                }, ()=>{console.log(this.state.emailGroups)})
+            });
+
         console.log(this.props.chainId);
         if(this.props.chainId){
             fetchChainData(this.props.chainId).then((res) => {
                 const data = res.data.chaindata;
                 this.setState(data
-                , ()=>{console.log(this.state)})
+                , ()=>{
+                    console.log(this.state);
+                    var date = new Date();
+                    date.setHours(data.frequency.hours, data.frequency.minutes);
+                    if(data.frequency.period!="Recurring"){
+                        this.setState({
+                            currDate : date
+                        });
+                    }
+                })
             }).catch((e)=>{
                 console.log(e);
                 this.setState({
                 }, ()=>{console.log(this.state)})
             });
         }
-
-        fetchEmailGroups().then((res)=>{
-            const data = res.data;
-                this.setState({emailGroups:data}
-                , ()=>{console.log(this.state.emailGroups)})
-            }).catch((e)=>{
-                console.log(e);
-                this.setState({emailGroups:[]
-                }, ()=>{console.log(this.state.emailGroups)})
-            });
     }
 
     submitChainData(futureStatus){
         var fd = new FormData();
         const chainData = this.state;
-        fd.append("files", chainData.attachedNewFiles);
+        for(var i=0; i<chainData.attachedNewFiles.length; i++){
+            fd.append("files", chainData.attachedNewFiles[i]);
+        }
         var payload = {
             _id: chainData._id,
             chainname : chainData.chainname,
-            userid : chainData.userid,
+            userid : Session.getObject("userinfo")["_id"],
             emailgroupid : chainData.emailgroupid._id,
             messageid : {
                 _id : chainData.messageid._id,
-                text : chainData.messageid.text
+                text : chainData.messageid.text,
+                attachments : chainData.messageid.attachments
             },
             frequency: chainData.frequency,
             status: false
         }
         
         console.log(JSON.stringify(payload));
-        if(futureStatus) payload["status"] = true;
+        if(futureStatus) payload.status = true;
         fd.append("body", JSON.stringify(payload));
 
         // console.log(payload, fd);
@@ -136,9 +145,13 @@ export default class ChainForm extends React.Component{
         submitChainData().then((res)=>{
             const data = res.data.chaindata;
             this.setState(data
-            , ()=>{console.log(this.state)})
+            , ()=>{
+                console.log(this.state);
+                window.location.href = "/chains/manage"
+            })
         }).catch((e)=>{
             console.log(e);
+            alert("Something went wrong");
             this.setState({
             }, ()=>{console.log(this.state)})
         });
@@ -158,32 +171,8 @@ export default class ChainForm extends React.Component{
         textarea.scrollTop = textarea.scrollHeight;
     }
 
-    handleDateChange(newDate){
-        this.setState({
-            frequency : {...this.state.frequency, date:newDate}
-        }, ()=>{
-            console.log(this.state);
-        });
-    };
-
-    handleTimeChange(newTime){
-        var stringTime =  newTime.getHours() + ":" + newTime.getMinutes();
-        this.setState({
-            frequency : {...this.state.frequency, time:stringTime},
-            currDate: newTime
-        });
-        console.log(stringTime);
-    };
-
-    handleOptionChange(event){
-        console.log(event);
-        const newData = this.state.frequency;
-        newData[event.target.name] = event.target.value;
-        this.setState({
-            frequency : newData
-        }, ()=>{
-            console.log(this.state);
-        });
+    setFrequency(newFrequency){
+        this.setState({frequency:newFrequency});
     }
 
     handleGroupChange(event){
@@ -207,119 +196,37 @@ export default class ChainForm extends React.Component{
         });
     }
 
-    getDateTime(){
-        console.log(this.state.frequency.time);
-        // var hm = time.split(":");
-        // console.log(hm);
-        // return new Date().setHours(hm[0], hm[1], 0);
-        return "";
-    }
-
     truncate(str) {
-        return str.length > 15 ? str.substring(0, 15) + "..." : str;
+        return str.length > 15 ? str.substring(0, 20) + "..." : str;
     }
     
     render(){
 
-        const periodOptions = [
-            {key:0, period: "Weekly"},
-            {key:1, period: "Monthly"},
-            {key:2, period: "Yearly"},
-            {key:3, period: "Recurring"}
-        ]
-
-        const dayOptions = [
-            {key:0, day: "Monday"},
-            {key:1, day: "Tuesday"},
-            {key:2, day: "Wednesday"},
-            {key:3, day: "Thursday"},
-            {key:4, day: "Friday"},
-            {key:5, day: "Saturday"},
-            {key:6, day: "Sunday"}
-        ]
-
-        const recurringOptions = [
-            {key:0, repeat: "30"},
-            {key:1, repeat: "20"}
-        ]
-
-        const dayOfMonth = [];
-        for(var dateOfMonth=1; dateOfMonth<=28; dateOfMonth++){
-            dayOfMonth.push(dateOfMonth);
-        }
-
         return <div className="inner">
-            <h1>Create Chain</h1>
+            <h1>{this.props.title} Chain</h1>
             <div className="form-container">
                 <form id="chain-form">
                     <div className="form-group">
                         <label>Chain Name</label>
-                        <input type="text" className="text-input" value={this.state.chainname} onChange={this.handleChainNameChange.bind(this)}/>
+                        <input type="text" className="text-input" value={this.state.chainname} onChange={this.handleChainNameChange.bind(this)} required/>
                     </div>
                     <div className="form-group">
                         <label>Email Group</label>
-                        <select className="freq-drop email-group-drop" value={this.state.emailgroupid._id} onChange={this.handleGroupChange.bind(this)}>
-                            {this.state.emailGroups.map((emailGroup, index)=><option key={index} value={emailGroup._id}>{emailGroup.groupName}</option>)}
-                        </select>
-                        <div className="add-icon">
-                            <Link to="/emails/add"><i className="material-icons">
-                                add_circle
-                            </i>
-                            </Link>
+                        <div className="d-flex">
+                            <select className="freq-drop email-group-drop" value={this.state.emailgroupid._id} onChange={this.handleGroupChange.bind(this)}>
+                                {this.state.emailGroups.map((emailGroup, index)=><option key={index} value={emailGroup._id}>{emailGroup.groupName}</option>)}
+                            </select>
+                            <div className="add-icon" >
+                                <Link to="/email/add"><i className="material-icons" style={{fontSize:"2rem"}}>
+                                    add_circle
+                                </i>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                     <div className="form-group">
                         <label>Frequency</label>
-                        <div className="drop-downs">
-                            <select className="freq-drop" name="period" value={this.state.frequency.period} onChange={this.handleOptionChange}>
-                                {periodOptions.map((periodOption, index)=>{
-                                    return <option value={periodOption.period}>{periodOption.period}</option>
-                                })}
-                            </select>
-                            {this.state.frequency.period=="Weekly" && 
-                                <select className="freq-drop" name="day" value={this.state.frequency.day} onChange={this.handleOptionChange}>
-                                    {dayOptions.map((dayOption, index)=>{
-                                        return <option value={dayOption.day}>{dayOption.day}</option>
-                                    })}
-                                </select>
-                            }
-                            {this.state.frequency.period=="Recurring" && 
-                                <select className="freq-drop" name="repeat" value={this.state.frequency.repeat} onChange={this.handleOptionChange}>
-                                    {recurringOptions.map((recurringOption, index)=>{
-                                        return <option value={recurringOption.repeat}>{recurringOption.repeat}</option>
-                                    })}
-                                </select>
-                            }
-                            {this.state.frequency.period=="Monthly" && 
-                                <select className="freq-drop" name="dateOfMonth" value={this.state.frequency.dateOfMonth} onChange={this.handleOptionChange}>
-                                    {dayOfMonth.map((dateOfMonth, index)=>{
-                                        return <option value={dateOfMonth}>{dateOfMonth}</option>
-                                    })}
-                                </select>
-                            }
-                            {this.state.frequency.period=="Yearly" &&
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <DatePicker
-                                        label="Date"
-                                        value={this.state.frequency.date}
-                                        onChange={this.handleDateChange}
-                                        animateYearScrolling
-                                    />
-                                </MuiPickersUtilsProvider>
-                            }
-                            {this.state.frequency.period!="Recurring" && 
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <TimePicker
-                                    clearable
-                                    ampm={false}
-                                    label="24 hours"
-                                    value={this.state.currDate}
-                                    onChange={this.handleTimeChange}
-                                />
-                            </MuiPickersUtilsProvider>
-                            }
-                        </div>
-                        {/* add time */}
+                        <FrequencySelector frequency={this.state.frequency} setFrequency={this.setFrequency.bind(this)}/>
                     </div>
                     <div className="form-group">
                         <label>Email Body</label>

@@ -107,6 +107,7 @@ footer {
 
 .dash-btn {
 	text-decoration: none;
+	color: black;
 }
 
 .dash-btn-container {
@@ -503,4 +504,27 @@ footer {
 	opacity: 0;
 	width: 0;
 	position: absolute;
+}
+
+.mail-cred-para{
+	text-align: center;
+	width: 100%;
+	font-size: 1.5rem;
+}
+
+.mailcred-google{
+	margin-top: 5vh;
+}
+
+.mailcred-inner{
+	margin-top: 5vh;
+}
+
+.nav-logo{
+	height: 50px;
+}
+
+.drawer-list-item-link{
+	text-decoration: none;
+	color: black;
 }

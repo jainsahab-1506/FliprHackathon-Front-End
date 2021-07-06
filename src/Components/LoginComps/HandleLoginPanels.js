@@ -1,7 +1,7 @@
 import React from "react";
 import Login from "./Login";
 import Signup from "./Signup";
-import Container from "./Container";
+import Container from "../Container";
 
 export default function HandleLoginPanels(props) {
   // function handlePanels() {

@@ -1,14 +1,15 @@
 import './static/templates/styles.css';
-import Dashboard from './Components/Dashboard';
+import Dashboard from './Components/DashboardComps/Dashboard';
 import Footer from './Components/Footer';
 import CustomNavbar from './Components/NavBar/CustomNavbar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import ManageChains from './Components/ManageChains';
-import ManageEmails from './Components/ManageEmails';
-import CreateEmail from './Components/CreateEmail';
-import CreateChain from './Components/CreateChain';
-import EditEmail from './Components/EditEmail';
-import HandleLogin from './Components/HandleLoginPanels';
+import ManageChains from './Components/ChainComps/ManageChains';
+import ManageEmails from './Components/EmailComps/ManageEmails';
+import CreateEmail from './Components/EmailComps/CreateEmail';
+import CreateChain from './Components/ChainComps/CreateChain';
+import EditEmail from './Components/EmailComps/EditEmail';
+import HandleLogin from './Components/LoginComps/HandleLoginPanels';
+import AddMailCred from './Components/MailComps/AddMailCred';
 
 function App() {
 	return (
@@ -29,18 +30,12 @@ function App() {
 						<CustomNavbar />
 						<Switch>
 							<Route path='/' exact component={Dashboard}></Route>
-							<Route
-								path='/chains/manage'
-								exact
-								component={ManageChains}></Route>
+							<Route path='/chains/manage' exact component={ManageChains}></Route>
 							<Route path='/email/edit/:id' exact component={EditEmail} />
-							<Route
-								path='/email/manage'
-								exact
-								component={ManageEmails}></Route>
+							<Route path='/email/manage' exact component={ManageEmails}></Route>
 							<Route path='/email/add' exact component={CreateEmail}></Route>
 							<Route path='/chains/add/:chainId?' exact component={CreateChain}></Route>
-              {/* <Route path='/chains/edit/:id' exact component={EditChain}></Route> */}
+              				<Route path='/mailcred' exact component={AddMailCred}></Route>
 						</Switch>
 						<Footer />
 					</Route>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "./utils/axios.js";
-import { requests } from "./utils/requests";
+import axios from "../utils/axios.js";
+import { requests } from "../utils/requests";
 import { useDispatch } from "react-redux";
 import {
   logOutSuccess,
   signInSuccess,
-} from "../store/modules/auth/auth.action";
+} from "../../store/modules/auth/auth.action";
 import { useSelector } from "react-redux";
 import { GoogleLogin } from "react-google-login";
 
@@ -14,7 +14,7 @@ export default function Login(props) {
   const authToken = useSelector((state) => state.auth.token);
   useEffect(() => {
     if (authToken) {
-      // dispatch(logOutSuccess({}));
+      dispatch(logOutSuccess({}));
       window.location.href = "/";
     }
   }, []);
@@ -32,7 +32,7 @@ export default function Login(props) {
     }
   }
   function responseGoogleSuccess(resp) {
-    console.log(resp.mc.access_token);
+    // console.log(resp.mc.access_token);
     async function doOAuthLogin() {
       const request = await axios.post(requests["doOAuthLogin"], resp);
       return request;
@@ -42,12 +42,12 @@ export default function Login(props) {
         const data = res.data;
         const { token: token, profile: userinfo } = res.data;
 
-        // window.location.href = "/";
+        window.location.href = "/";
         dispatch(signInSuccess({ token, userinfo }));
       })
       .catch((e) => {
         alert("Something Went Wrong");
-        // window.location.href = "/login";
+        window.location.href = "/login";
       });
   }
   function HandleSubmit(e) {
@@ -112,14 +112,11 @@ export default function Login(props) {
                   clientId="880095652773-fa64olbb7s5u063d05cdva3pl88mrbm2.apps.googleusercontent.com"
                   buttonText="Sign in with Google"
                   onSuccess={responseGoogleSuccess}
-                  scope="email profile https://www.googleapis.com/auth/gmail.send"
+                  scope="email profile"
                   onFailure={(e) => {
                     console.log(e);
                   }}
-                  // cookiePolicy={"single_host_origin"}
-                  // cross-origin-opener-policy={"same-origin-allow-popups"}
                 />
-                {/* <div className="g-signin2" data-onsuccess="onSignIn" /> */}
               </div>
             </div>
             <div className="form-group">

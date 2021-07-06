@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Container from './Container';
+import Container from '../Container';
 import EmailGroupTable from './EmailGroupComps/EmailGroupTable.jsx';
 
 export default function ManageEmails() {

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import axios from "./utils/axios.js";
-import { requests } from "./utils/requests";
+import axios from "../utils/axios.js";
+import { requests } from "../utils/requests";
 import { useDispatch, useSelector } from "react-redux";
 import {
   logOutSuccess,
   signInSuccess,
-} from "../store/modules/auth/auth.action";
+} from "../../store/modules/auth/auth.action";
 export default function Signup() {
   const authToken = useSelector((state) => state.auth.token);
   useEffect(() => {

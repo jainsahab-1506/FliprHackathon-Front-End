@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import { useHistory } from 'react-router-dom';
 
-import axios from '../utils/axios';
-import { requests } from '../utils/requests';
+import axios from '../../utils/axios';
+import { requests } from '../../utils/requests';
 
 export default function EmailGroupTable() {
 	const history = useHistory();

@@ -7,8 +7,10 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import NavBarVitalsLoggedIn from "./NavBarVitalsLoggedIn";
 import NavBarVitalsLoggedOut from "./NavBarVitalsLoggedOut";
+import IconButton from '@material-ui/core/IconButton';
+import NavLogo from "./NavLogo";
 import Session from "../../service/session.js";
-const drawerWidth = 240;
+import DrawerMenu from "./DrawerMenu";
 // const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const styles = (theme) => ({
@@ -21,14 +23,11 @@ const styles = (theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    backgroundColor: "black",
+
   },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+  menuButton: {
+    marginRight: theme.spacing(2),
   },
 });
 
@@ -45,13 +44,16 @@ class CustomNavBar extends Component {
     return (
       <div className={this.props.classes.root}>
         <AppBar
-          style={{ backgroundColor: "black" }}
           position="fixed"
           className={clsx(this.props.classes.appBar, {
             [this.props.classes.appBarShift]: this.state.open,
           })}
         >
           <Toolbar>
+            {authtoken && <IconButton edge="start" className={this.props.classes.menuButton} color="inherit" aria-label="menu">
+              <DrawerMenu/>
+            </IconButton>}
+            <NavLogo/>
             {authtoken ? <NavBarVitalsLoggedIn /> : <NavBarVitalsLoggedOut />}
           </Toolbar>
         </AppBar>

@@ -1,9 +1,9 @@
 import React from 'react'
-import Container from './Container'
-import SendBusinessMail from './DashboardComps/SendBusinessMail'
-import TagLine from './DashboardComps/TagLine'
-import WhatWeOffer from './DashboardComps/WhatWeOffer'
-import OurTeam from './DashboardComps/OurTeam'
+import Container from '../Container'
+import SendBusinessMail from './SendBusinessMail'
+import TagLine from './TagLine'
+import WhatWeOffer from './WhatWeOffer'
+import OurTeam from './OurTeam'
 
 export default function Dashboard() {
     return (
