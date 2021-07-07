@@ -13,6 +13,7 @@ export default class ChainForm extends React.Component{
         this.state = {
             _id : "",
             chainname : "",
+            subject: "",
             emailgroupid : {
                 _id : "",
                 groupName : ""
@@ -101,6 +102,7 @@ export default class ChainForm extends React.Component{
         var payload = {
             _id: chainData._id,
             chainname : chainData.chainname,
+            subject : chainData.subject,
             userid : Session.getObject("userinfo")["_id"],
             emailgroupid : chainData.emailgroupid._id,
             messageid : {
@@ -160,6 +162,12 @@ export default class ChainForm extends React.Component{
     handleChainNameChange(event){
         this.setState({
             chainname:event.target.value
+        });
+    }
+
+    handleSubjectChange(event){
+        this.setState({
+            subject:event.target.value
         });
     }
 
@@ -223,6 +231,10 @@ export default class ChainForm extends React.Component{
                                 </Link>
                             </div>
                         </div>
+                    </div>
+                    <div className="form-group">
+                        <label>Subject</label>
+                        <input type="text" className="text-input" value={this.state.subject} onChange={this.handleSubjectChange.bind(this)} required/>
                     </div>
                     <div className="form-group">
                         <label>Frequency</label>
