@@ -5,6 +5,10 @@ import 'date-fns';
 import { Link } from 'react-router-dom';
 import Session from '../../service/session';
 import FrequencySelector from './FrequencySelector';
+import {
+  showLoader,
+  hideLoader,
+} from "../../store/modules/application/app.action";
 
 export default class ChainForm extends React.Component{
     
@@ -43,12 +47,14 @@ export default class ChainForm extends React.Component{
     }
 
     componentDidMount(){
+        this.props.dispatch(showLoader());
         async function fetchChainData(chainId){
             const request = await axios.get(requests['fetchChainById']+"/"+chainId);
             return request;
         }
 
         async function fetchEmailGroups(){
+            // this.props.dispatch(showLoader());
             const request = await axios.get(requests['fetchEmailGroups']);
             return request;
         }
@@ -58,16 +64,18 @@ export default class ChainForm extends React.Component{
                 this.setState({emailGroups:data}
                 , ()=>{
                     console.log(this.state.emailGroups);
-                    if(!(this.state.emailgroupid) || (!this.state.emailgroupid._id && this.state.emailGroups)){
+                    if(!this.state.emailgroupid && this.state.emailGroups){
                         this.setState({
                             emailgroupid : this.state.emailGroups[0]
                         })
                     }
-                })
+                });
+                this.props.dispatch(hideLoader());
             }).catch((e)=>{
                 console.log(e);
                 this.setState({emailGroups:[]
-                }, ()=>{console.log(this.state.emailGroups)})
+                }, ()=>{console.log(this.state.emailGroups)});
+                this.props.dispatch(hideLoader());
             });
 
         console.log(this.props.chainId);
@@ -84,16 +92,20 @@ export default class ChainForm extends React.Component{
                             currDate : date
                         });
                     }
-                })
+                });
+                this.props.dispatch(hideLoader());
             }).catch((e)=>{
                 console.log(e);
                 this.setState({
-                }, ()=>{console.log(this.state)})
+                }, ()=>{console.log(this.state)});
+                this.props.dispatch(hideLoader());
             });
         }
     }
 
     submitChainData(futureStatus){
+        
+        this.props.dispatch(showLoader());
         var fd = new FormData();
         const chainData = this.state;
         for(var i=0; i<chainData.attachedNewFiles.length; i++){
@@ -150,12 +162,14 @@ export default class ChainForm extends React.Component{
             , ()=>{
                 console.log(this.state);
                 window.location.href = "/chains/manage"
-            })
+            });
+            this.props.dispatch(hideLoader());
         }).catch((e)=>{
             console.log(e);
             alert("Something went wrong");
             this.setState({
-            }, ()=>{console.log(this.state)})
+            }, ()=>{console.log(this.state)});
+            this.props.dispatch(hideLoader());
         });
     }
 
@@ -221,7 +235,7 @@ export default class ChainForm extends React.Component{
                     <div className="form-group">
                         <label>Email Group</label>
                         <div className="d-flex">
-                            <select className="freq-drop email-group-drop" value={this.state.emailgroupid._id} onChange={this.handleGroupChange.bind(this)}>
+                            <select className="freq-drop email-group-drop" value={this.state.emailgroupid ? this.state.emailgroupid._id:""} onChange={this.handleGroupChange.bind(this)}>
                                 {this.state.emailGroups.map((emailGroup, index)=><option key={index} value={emailGroup._id}>{emailGroup.groupName}</option>)}
                             </select>
                             <div className="add-icon" >

@@ -10,6 +10,7 @@ import CreateChain from './Components/ChainComps/CreateChain';
 import EditEmail from './Components/EmailComps/EditEmail';
 import HandleLogin from './Components/LoginComps/HandleLoginPanels';
 import AddMailCred from './Components/MailComps/AddMailCred';
+import Loader from './Components/Loader';
 
 function App() {
 	return (
@@ -27,6 +28,7 @@ function App() {
 						render={(props) => <HandleLogin {...props} />}
 					/>
 					<Route path='/'>
+						<Loader/>
 						<CustomNavbar />
 						<Switch>
 							<Route path='/' exact component={Dashboard}></Route>
