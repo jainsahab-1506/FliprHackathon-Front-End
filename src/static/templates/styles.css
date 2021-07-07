@@ -169,6 +169,7 @@ footer {
 	background: transparent;
 	display: grid;
 	place-items: center;
+	border: 2px solid black;
 }
 
 .add-icon {
@@ -184,6 +185,11 @@ footer {
 
 .add-icon i {
 	font-size: 4rem;
+}
+
+.add-email-icon{
+	align-self: center;
+	margin-left: 2vw;
 }
 
 .form-group {
@@ -224,6 +230,10 @@ footer {
 
 .email-group-drop {
 	width: 40vw;
+}
+
+.email-group-title{
+	display: flex;
 }
 
 .textarea-cont {

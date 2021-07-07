@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
-import { useHistory } from 'react-router-dom';
-
+import { useHistory, Link } from 'react-router-dom';
 import axios from '../../utils/axios';
 import { requests } from '../../utils/requests';
 
@@ -144,7 +143,15 @@ export default function EmailGroupTable() {
 	return (
 		<div>
 			<div className='inner'>
-				<h1>Manage Email Groups</h1>
+				<div className="email-group-title">
+					<h1>Manage Email Groups</h1>
+					<div className="add-icon add-email-icon">
+                        <Link to="/email/add"><i className="material-icons">
+                            add_circle
+                        </i>
+                        </Link>
+                    </div>
+				</div>
 				<DataTable columns={columns} data={emailGroupsData} />
 			</div>
 		</div>
