@@ -64,7 +64,7 @@ export default class ChainForm extends React.Component{
                 this.setState({emailGroups:data}
                 , ()=>{
                     console.log(this.state.emailGroups);
-                    if(!this.state.emailgroupid && this.state.emailGroups){
+                    if((!this.state.emailgroupid || !this.state.emailgroupid._id) && this.state.emailGroups.length>0){
                         this.setState({
                             emailgroupid : this.state.emailGroups[0]
                         })
@@ -235,7 +235,7 @@ export default class ChainForm extends React.Component{
                     <div className="form-group">
                         <label>Email Group</label>
                         <div className="d-flex">
-                            <select className="freq-drop email-group-drop" value={this.state.emailgroupid ? this.state.emailgroupid._id:""} onChange={this.handleGroupChange.bind(this)}>
+                            <select className="freq-drop email-group-drop" value={this.state.emailgroupid ? this.state.emailgroupid._id:""} onChange={this.handleGroupChange.bind(this)} required>
                                 {this.state.emailGroups.map((emailGroup, index)=><option key={index} value={emailGroup._id}>{emailGroup.groupName}</option>)}
                             </select>
                             <div className="add-icon" >
