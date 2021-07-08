@@ -79,7 +79,7 @@ export default function HandleAddMail() {
           Add a new mail cred:
           <div className="submit-google-cont mailcred-google">
             <GoogleLogin
-              clientId={process.env.CLIENT_ID}
+              clientId="880095652773-fa64olbb7s5u063d05cdva3pl88mrbm2.apps.googleusercontent.com"
               buttonText="Sign in with Google"
               onSuccess={responseGoogleSuccess}
               accessType="offline"
