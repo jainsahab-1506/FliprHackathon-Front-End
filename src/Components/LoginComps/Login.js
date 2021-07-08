@@ -9,7 +9,7 @@ import {
 } from "../../store/modules/auth/auth.action";
 import {
   showLoader,
-  hideLoader
+  hideLoader,
 } from "../../store/modules/application/app.action";
 import { useSelector } from "react-redux";
 import { GoogleLogin } from "react-google-login";
@@ -118,7 +118,7 @@ export default function Login(props) {
 
               <div className="submit-google-cont">
                 <GoogleLogin
-                  clientId="880095652773-fa64olbb7s5u063d05cdva3pl88mrbm2.apps.googleusercontent.com"
+                  clientId={process.env.CLIENT_ID}
                   buttonText="Sign in with Google"
                   onSuccess={responseGoogleSuccess}
                   scope="email profile"
