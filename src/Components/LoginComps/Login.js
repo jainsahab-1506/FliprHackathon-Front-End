@@ -9,7 +9,7 @@ import {
 } from "../../store/modules/auth/auth.action";
 import {
   showLoader,
-  hideLoader
+  hideLoader,
 } from "../../store/modules/application/app.action";
 import { useSelector } from "react-redux";
 import { GoogleLogin } from "react-google-login";
