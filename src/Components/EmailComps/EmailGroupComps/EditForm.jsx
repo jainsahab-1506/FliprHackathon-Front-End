@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
-import axios from '../utils/axios';
-import { requests } from '../utils/requests';
+import axios from '../../utils/axios';
+import { requests } from '../../utils/requests';
 
 import '@pathofdev/react-tag-input/build/index.css';
 import TagsInput from './TagsInput';

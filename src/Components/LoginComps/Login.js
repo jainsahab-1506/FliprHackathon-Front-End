@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "./utils/axios.js";
-import { requests } from "./utils/requests";
+import axios from "../utils/axios.js";
+import { requests } from "../utils/requests";
 import { useDispatch } from "react-redux";
 import {
   logOutSuccess,
   signInSuccess,
-} from "../store/modules/auth/auth.action";
+} from "../../store/modules/auth/auth.action";
 import { useSelector } from "react-redux";
 import { GoogleLogin } from "react-google-login";
 
@@ -14,7 +14,7 @@ export default function Login(props) {
   const authToken = useSelector((state) => state.auth.token);
   useEffect(() => {
     if (authToken) {
-      // dispatch(logOutSuccess({}));
+      dispatch(logOutSuccess({}));
       window.location.href = "/";
     }
   }, []);
@@ -32,7 +32,7 @@ export default function Login(props) {
     }
   }
   function responseGoogleSuccess(resp) {
-    console.log(resp);
+    // console.log(resp.mc.access_token);
     async function doOAuthLogin() {
       const request = await axios.post(requests["doOAuthLogin"], resp);
       return request;
@@ -109,14 +109,14 @@ export default function Login(props) {
 
               <div className="submit-google-cont">
                 <GoogleLogin
-                  clientId="97781066717-peq315812iffrl0jc4q2jdsbn1hjlrn8.apps.googleusercontent.com"
+                  clientId="880095652773-fa64olbb7s5u063d05cdva3pl88mrbm2.apps.googleusercontent.com"
                   buttonText="Sign in with Google"
                   onSuccess={responseGoogleSuccess}
-                  // onFailure={responseGoogle}
-                  // cookiePolicy={"single_host_origin"}
-                  // cross-origin-opener-policy={"same-origin-allow-popups"}
+                  scope="email profile"
+                  onFailure={(e) => {
+                    console.log(e);
+                  }}
                 />
-                {/* <div className="g-signin2" data-onsuccess="onSignIn" /> */}
               </div>
             </div>
             <div className="form-group">

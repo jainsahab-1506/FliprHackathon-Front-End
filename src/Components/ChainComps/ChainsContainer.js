@@ -21,7 +21,7 @@ export default function ChainsContainer() {
 			console.log(e);
 			setChains([]);
 		});
-    }, [])
+    }, []);
 
     return (
         <div className="inner">
