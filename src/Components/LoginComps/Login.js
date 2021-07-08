@@ -118,7 +118,7 @@ export default function Login(props) {
 
               <div className="submit-google-cont">
                 <GoogleLogin
-                  clientId={process.env.CLIENT_ID}
+                  clientId="880095652773-fa64olbb7s5u063d05cdva3pl88mrbm2.apps.googleusercontent.com"
                   buttonText="Sign in with Google"
                   onSuccess={responseGoogleSuccess}
                   scope="email profile"
