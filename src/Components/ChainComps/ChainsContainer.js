@@ -3,13 +3,20 @@ import axios from '../utils/axios';
 import {requests} from '../utils/requests';
 import Chain from './Chain';
 import {Link} from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import {
+  showLoader,
+  hideLoader,
+} from "../../store/modules/application/app.action";
 
 export default function ChainsContainer() {
     
     const [chains, setChains] = useState([]);
+    const dispatch = useDispatch();
 
     useEffect(()=>{
         async function fetchChains(){
+            dispatch(showLoader());
             const request = await axios.get(requests['fetchUserChains']);
 			return request;
         }
@@ -17,9 +24,11 @@ export default function ChainsContainer() {
 			const data = res.data.chains;
 			setChains(data);
 	  		console.log(data);
+            dispatch(hideLoader());
 		}).catch((e)=>{
 			console.log(e);
 			setChains([]);
+            dispatch(hideLoader());
 		});
     }, []);
 

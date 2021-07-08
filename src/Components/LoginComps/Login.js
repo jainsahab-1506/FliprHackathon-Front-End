@@ -7,6 +7,10 @@ import {
   logOutSuccess,
   signInSuccess,
 } from "../../store/modules/auth/auth.action";
+import {
+  showLoader,
+  hideLoader
+} from "../../store/modules/application/app.action";
 import { useSelector } from "react-redux";
 import { GoogleLogin } from "react-google-login";
 
@@ -34,6 +38,7 @@ export default function Login(props) {
   function responseGoogleSuccess(resp) {
     // console.log(resp.mc.access_token);
     async function doOAuthLogin() {
+      dispatch(showLoader());
       const request = await axios.post(requests["doOAuthLogin"], resp);
       return request;
     }
@@ -41,12 +46,13 @@ export default function Login(props) {
       .then((res) => {
         const data = res.data;
         const { token: token, profile: userinfo } = res.data;
-
+        dispatch(hideLoader());
         window.location.href = "/";
         dispatch(signInSuccess({ token, userinfo }));
       })
       .catch((e) => {
         alert("Something Went Wrong");
+        dispatch(hideLoader());
         window.location.href = "/login";
       });
   }
@@ -57,6 +63,7 @@ export default function Login(props) {
     };
     e.preventDefault();
     async function doLogin() {
+      dispatch(showLoader());
       const request = await axios.post(requests["doLogin"], senddata);
       return request;
     }
@@ -66,11 +73,13 @@ export default function Login(props) {
         const { token: token, profile: userinfo } = res.data;
         setemail("");
         setpassword("");
+        dispatch(hideLoader());
         window.location.href = "/";
         dispatch(signInSuccess({ token, userinfo }));
       })
       .catch((e) => {
         alert("Something Went Wrong");
+        dispatch(hideLoader());
         window.location.href = "/login";
       });
   }

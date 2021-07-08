@@ -3,6 +3,11 @@ import { useHistory } from 'react-router-dom';
 
 import axios from '../../utils/axios';
 import { requests } from '../../utils/requests';
+import { useDispatch } from "react-redux";
+import {
+  showLoader,
+  hideLoader,
+} from "../../../store/modules/application/app.action";
 
 import '@pathofdev/react-tag-input/build/index.css';
 import TagsInput from './TagsInput';
@@ -17,6 +22,7 @@ export default function EmailGroupForm() {
 		bcc: [],
 	});
 
+	const dispatch = useDispatch();
 	const [selectedFile, setSelectedFile] = useState();
 	const [isSelected, setIsSelected] = useState(false);
 
@@ -24,6 +30,7 @@ export default function EmailGroupForm() {
 		event.preventDefault();
 
 		try {
+			dispatch(showLoader());
 			const response = await axios.post(
 				requests['createEmailGroup'],
 				emailFormData
@@ -38,14 +45,16 @@ export default function EmailGroupForm() {
 					cc: [],
 					bcc: [],
 				});
-
+				dispatch(hideLoader());
 				history.push(`/email/manage`);
 			} else {
 				alert('Something went wrong. Please try again.');
+				dispatch(hideLoader());
 			}
 		} catch (error) {
 			alert('Something went wrong. Please try again.');
 			console.log(error);
+			dispatch(hideLoader());
 		}
 	};
 
@@ -71,8 +80,10 @@ export default function EmailGroupForm() {
 				alert('The uploaded file could not be parsed. ');
 			}
 		);
+		dispatch(showLoader());
 		setSelectedFile(file);
 		setIsSelected(true);
+		dispatch(hideLoader());
 	};
 
 	const changeGroupName = (event) => {

@@ -3,11 +3,17 @@ import { useSelector } from "react-redux";
 import axios from "../utils/axios.js";
 import { requests } from "../utils/requests";
 import { GoogleLogin } from "react-google-login";
+import { useDispatch } from 'react-redux';
+import {
+    showLoader,
+    hideLoader
+  } from "../../store/modules/application/app.action";
 
 export default function HandleAddMail() {
 
     const [mailCred, setMailCred] = useState();
-    const authToken = useSelector((state) => state.auth.token);        
+    const authToken = useSelector((state) => state.auth.token);      
+    const dispatch = useDispatch();  
 
     useEffect(()=>{
 
@@ -15,6 +21,7 @@ export default function HandleAddMail() {
             window.location.href = "/login";
             }
         async function fetchCredMail() {
+            dispatch(showLoader());
             const request = await axios.get(requests["getMailCred"]);
             return request;
           }
@@ -25,8 +32,12 @@ export default function HandleAddMail() {
             if(data.credential){
                 setMailCred(data.credential);
             }
+            dispatch(hideLoader());
+
         }).catch((e)=>{
             alert("Something Went Wrong");
+            dispatch(hideLoader());
+
         });
         
     }, []);
@@ -34,6 +45,7 @@ export default function HandleAddMail() {
     function responseGoogleSuccess(resp) {
         // console.log(resp.mc.access_token);
         async function doOAuthLogin() {
+            dispatch(showLoader());
           const request = await axios.post(requests["addMailCred"], resp);
           return request;
         }
@@ -42,9 +54,13 @@ export default function HandleAddMail() {
             const data = res.data;
             // console.log(data);
             setMailCred(data);
+            dispatch(hideLoader());
+
           })
           .catch((e) => {
             alert("Something Went Wrong");
+            dispatch(hideLoader());
+
           });
       }
 

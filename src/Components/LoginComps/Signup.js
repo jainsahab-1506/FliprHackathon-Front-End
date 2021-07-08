@@ -8,6 +8,10 @@ import {
   logOutSuccess,
   signInSuccess,
 } from "../../store/modules/auth/auth.action";
+import {
+  showLoader,
+  hideLoader
+} from "../../store/modules/application/app.action";
 export default function Signup() {
   const authToken = useSelector((state) => state.auth.token);
   useEffect(() => {
@@ -44,6 +48,7 @@ export default function Signup() {
     };
     e.preventDefault();
     async function doRegister() {
+      dispatch(showLoader());
       const request = await axios.post(requests["doRegister"], senddata);
       return request;
     }
@@ -56,11 +61,13 @@ export default function Signup() {
         setLastName("");
         setFirstName("");
         setemail("");
+        dispatch(hideLoader());
         window.location.href = "/";
 
         dispatch(signInSuccess({ token, userinfo }));
       })
       .catch((e) => {
+        dispatch(hideLoader());
         console.log(e.data);
       });
   }
