@@ -32,8 +32,8 @@ export default function Login(props) {
     }
   }
   function responseGoogleSuccess(resp) {
-<<<<<<< Updated upstream:src/Components/LoginComps/Login.js
     // console.log(resp.mc.access_token);
+    console.log(resp);
     async function doOAuthLogin() {
       const request = await axios.post(requests["doOAuthLogin"], resp);
       return request;
@@ -50,37 +50,6 @@ export default function Login(props) {
         alert("Something Went Wrong");
         window.location.href = "/login";
       });
-=======
-    console.log(resp);
-    // GoogleTokenResponse tokenResponse = new GoogleAuthorizationCodeTokenRequest(
-    //                 new NetHttpTransport(),
-    //                 JacksonFactory.getDefaultInstance(),
-    //                 "https://www.googleapis.com/oauth2/v4/token",
-    //                 "880095652773-fa64olbb7s5u063d05cdva3pl88mrbm2.apps.googleusercontent.com",
-    //                 "53th7Z7DoUfh70q-0ZA5wzP9",
-    //                 resp.code,
-    //               ).execute();
-
-    // String refreshToken = tokenResponse.getRefreshToken();
-    // String accessToken = tokenResponse.getAccessToken();
-    // console.log(refreshToken);
-    // async function doOAuthLogin() {
-    //   const request = await axios.post(requests["doOAuthLogin"], resp);
-    //   return request;
-    // }
-    // doOAuthLogin()
-    //   .then((res) => {
-    //     const data = res.data;
-    //     const { token: token, profile: userinfo } = res.data;
-    //     console.log(data);
-    //     // window.location.href = "/";
-    //     dispatch(signInSuccess({ token, userinfo }));
-    //   })
-    //   .catch((e) => {
-    //     alert("Something Went Wrong");
-    //     // window.location.href = "/login";
-    //   });
->>>>>>> Stashed changes:src/Components/Login.js
   }
   function HandleSubmit(e) {
     const senddata = {
@@ -146,13 +115,7 @@ export default function Login(props) {
                   buttonText="Sign in with Google"
                   accessType="offline"
                   onSuccess={responseGoogleSuccess}
-<<<<<<< Updated upstream:src/Components/LoginComps/Login.js
                   scope="email profile"
-=======
-                  responseType="code"
-                  prompt="consent"
-                  scope=" profile email https://www.googleapis.com/auth/gmail.send"
->>>>>>> Stashed changes:src/Components/Login.js
                   onFailure={(e) => {
                     console.log(e);
                   }}
