@@ -3,6 +3,11 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import axios from '../../utils/axios';
 import { requests } from '../../utils/requests';
+import { useDispatch } from "react-redux";
+import {
+  showLoader,
+  hideLoader,
+} from "../../../store/modules/application/app.action";
 
 import '@pathofdev/react-tag-input/build/index.css';
 import TagsInput from './TagsInput';
@@ -10,6 +15,7 @@ import TagsInput from './TagsInput';
 export default function EditForm() {
 	const history = useHistory();
 	const { id } = useParams();
+	const dispatch = useDispatch();
 
 	const [emailFormData, setEmailFormData] = useState({
 		_id: id,
@@ -24,14 +30,17 @@ export default function EditForm() {
 
 	useEffect(async () => {
 		try {
+			dispatch(showLoader());
 			const response = await axios.get(
 				`${requests['getEmailGroups']}/${emailFormData._id}`
 			);
 
 			const data = response.data;
 			setEmailFormData(data);
+			dispatch(hideLoader());
 		} catch (error) {
 			console.log(error);
+			dispatch(hideLoader());
 		}
 	}, [emailFormData._id]);
 
@@ -39,6 +48,7 @@ export default function EditForm() {
 		event.preventDefault();
 
 		try {
+			dispatch(showLoader());
 			console.log(emailFormData._id);
 			const response = await axios.put(
 				`${requests['updateEmailGroup']}/${emailFormData._id}`,
@@ -56,14 +66,16 @@ export default function EditForm() {
 					cc: [],
 					bcc: [],
 				});
-
+				dispatch(hideLoader());
 				history.push(`/email/manage`);
 			} else {
 				alert('Something went wrong. Please try again.');
+				dispatch(hideLoader());
 			}
 		} catch (error) {
 			alert('Something went wrong. Please try again.');
 			console.log(error);
+			dispatch(hideLoader());
 		}
 	};
 

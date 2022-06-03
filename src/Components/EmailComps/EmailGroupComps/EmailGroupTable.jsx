@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
-import { useHistory } from 'react-router-dom';
-
+import { useHistory, Link } from 'react-router-dom';
 import axios from '../../utils/axios';
 import { requests } from '../../utils/requests';
+import { useDispatch } from "react-redux";
+import {
+  showLoader,
+  hideLoader,
+} from "../../../store/modules/application/app.action";
 
 export default function EmailGroupTable() {
 	const history = useHistory();
@@ -11,8 +15,11 @@ export default function EmailGroupTable() {
 	const [emailGroups, setEmailGroups] = useState([]);
 	const [emailGroupsData, setEmailGroupsData] = useState([]);
 
+	const dispatch = useDispatch();
+
 	useEffect(async () => {
 		try {
+			dispatch(showLoader());
 			const response = await axios.get(requests['getEmailGroups']);
 			const data = response.data;
 			setEmailGroups(data);
@@ -26,8 +33,10 @@ export default function EmailGroupTable() {
 				return newGroup;
 			});
 			setEmailGroupsData(newData);
+			dispatch(hideLoader());
 		} catch (error) {
 			console.log(error);
+			dispatch(hideLoader());
 		}
 	}, []);
 
@@ -42,6 +51,7 @@ export default function EmailGroupTable() {
 
 	const deleteEmailGroup = async (event) => {
 		try {
+			dispatch(showLoader());
 			const emailGroupId = event.target.parentNode.id;
 			console.log(emailGroupId);
 
@@ -56,14 +66,17 @@ export default function EmailGroupTable() {
 
 				setEmailGroups(newEmailGroups);
 				setEmailGroupsData(newEmailGroups);
+				dispatch(hideLoader());
 			}
 		} catch (error) {
 			console.log(error);
+			dispatch(hideLoader());
 		}
 	};
 
 	const downloadJson = async (event) => {
 		try {
+			dispatch(showLoader());
 			const emailGroupId = event.target.parentNode.id;
 
 			const emailGroup = emailGroups.find(
@@ -96,8 +109,10 @@ export default function EmailGroupTable() {
 				a.click();
 				document.body.removeChild(a);
 			}
+			dispatch(hideLoader());
 		} catch (error) {
 			console.log(error);
+			dispatch(hideLoader());
 		}
 	};
 
@@ -144,7 +159,15 @@ export default function EmailGroupTable() {
 	return (
 		<div>
 			<div className='inner'>
-				<h1>Manage Email Groups</h1>
+				<div className="email-group-title">
+					<h1>Manage Email Groups</h1>
+					<div className="add-icon add-email-icon">
+                        <Link to="/email/add"><i className="material-icons">
+                            add_circle
+                        </i>
+                        </Link>
+                    </div>
+				</div>
 				<DataTable columns={columns} data={emailGroupsData} />
 			</div>
 		</div>

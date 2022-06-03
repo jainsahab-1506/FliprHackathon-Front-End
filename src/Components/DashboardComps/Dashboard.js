@@ -1,18 +1,9 @@
-<<<<<<< Updated upstream:src/Components/DashboardComps/Dashboard.js
-import React from 'react'
-import Container from '../Container'
-import SendBusinessMail from './SendBusinessMail'
-import TagLine from './TagLine'
-import WhatWeOffer from './WhatWeOffer'
-import OurTeam from './OurTeam'
-=======
 import React from "react";
 import Container from "./Container";
 import SendBusinessMail from "./DashboardComps/SendBusinessMail";
 import TagLine from "./DashboardComps/TagLine";
 import WhatWeOffer from "./DashboardComps/WhatWeOffer";
 import OurTeam from "./DashboardComps/OurTeam";
->>>>>>> Stashed changes:src/Components/Dashboard.js
 
 export default function Dashboard() {
   return (
