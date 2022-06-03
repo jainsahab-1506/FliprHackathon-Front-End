@@ -12,15 +12,6 @@ body {
 }
 
 .left {
-<<<<<<< HEAD
-  float: left;
-  width: 50%;
-}
-
-.right {
-  float: right;
-  width: 50%;
-=======
 	float: left;
 	width: 50%;
 	display: grid;
@@ -32,7 +23,6 @@ body {
 	width: 50%;
 	display: grid;
 	place-items: center;
->>>>>>> dad8a7bfed512483be62b9bc7bdd9d0ea62cb604
 }
 
 .center {
